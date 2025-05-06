@@ -1,0 +1,101 @@
+# .gitignore (Root of your project)
+
+# Node.js and Frontend (Nuxt.js)
+frontend/node_modules/
+frontend/bun.lockb
+frontend/build/
+
+# Nuxt dev/build outputs
+frontend/.output
+frontend/.data
+frontend/.nuxt
+frontend/.nitro
+frontend/.cache
+frontend/dist
+
+# Python and Django (Backend)
+backend/*.pyc
+backend/__pycache__/
+backend/local_settings.py
+backend/venv/
+backend/env/
+backend/*.egg-info
+
+# Database migrations (optional, see note below)
+backend/*/migrations/*
+!backend/*/migrations/__init__.py
+
+# Static and media files (if collected) - adjust as needed
+backend/static/
+backend/media/
+
+# Django secret key (keep this out of version control!)
+backend/SECRET_KEY.txt
+backend/.env
+backend/.env_*
+!backend/.env.example
+
+# Logs
+backend/*.log
+backend/logs/
+
+# OS and Editor specific
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.project
+.pydevproject
+
+# Bytecode
+backend/*.py[cod]
+
+# Uploaded files
+backend/uploads/
+
+# Distribution / Packaging
+backend/build/
+backend/dist/
+backend/env/
+backend/parts/
+backend/sdist/
+backend/eggs/
+backend/.eggs/
+backend/lib/
+backend/lib64/
+backend/develop-eggs/
+backend/**/__pycache__
+backend/staticfiles/
+
+# Celery / RabbitMQ
+backend/celerybeat.pid
+backend/celery.pid
+
+# Unit test coverage reports
+coverage/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.cache
+
+# MyPy cache
+.mypy_cache
+
+# pyenv
+.python-version
+.venv
+
+# Poetry
+poetry.lock
+
+# Rope
+.ropeproject
+
+# Sentry
+.sentry
+
+# Compiled resources
+frontend/*.js.map
+frontend/*.css.map
