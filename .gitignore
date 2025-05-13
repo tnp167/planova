@@ -1,101 +1,113 @@
-# .gitignore (Root of your project)
+# Dependencies
+**/node_modules
 
-# Node.js and Frontend (Nuxt.js)
-frontend/node_modules/
-frontend/bun.lockb
-frontend/build/
-
-# Nuxt dev/build outputs
-frontend/.output
-frontend/.data
-frontend/.nuxt
-frontend/.nitro
-frontend/.cache
-frontend/dist
-
-# Python and Django (Backend)
-backend/*.pyc
-backend/__pycache__/
-backend/local_settings.py
-backend/venv/
-backend/env/
-backend/*.egg-info
-
-# Database migrations (optional, see note below)
-backend/*/migrations/*
-!backend/*/migrations/__init__.py
-
-# Static and media files (if collected) - adjust as needed
-backend/static/
-backend/media/
-
-# Django secret key (keep this out of version control!)
-backend/SECRET_KEY.txt
-backend/.env
-backend/.env_*
-!backend/.env.example
+# Build outputs
+dist
+dist-ssr
+*.local
+.output
+.nuxt
+.nitro
+.cache
 
 # Logs
-backend/*.log
-backend/logs/
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# OS and Editor specific
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
 .idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 .project
 .pydevproject
 
-# Bytecode
-backend/*.py[cod]
+# Environment variables
+.env
+.env.*
+!.env.example
 
-# Uploaded files
-backend/uploads/
+# Vue.js / Vite specific
+*.vue.js
+*.vue.js.map
+*.vue.d.ts
+components.d.ts
+auto-imports.d.ts
+.vite-ssg-temp
+.vite-ssg-dist
 
-# Distribution / Packaging
-backend/build/
-backend/dist/
-backend/env/
-backend/parts/
-backend/sdist/
-backend/eggs/
-backend/.eggs/
-backend/lib/
-backend/lib64/
-backend/develop-eggs/
-backend/**/__pycache__
+# TypeScript
+*.tsbuildinfo
+.tscache/
+tsconfig.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+*.bak
+*.tmp
+
+# Virtual Environments
+.venv/
+**/venv/
+**/env/
+
+# Django
+backend/local_settings.py
+*.sqlite3
+*.db
+
+# Django migrations
+**/migrations/
+!**/migrations/__init__.py
+
+# Static and media files
+backend/static/
+backend/media/
 backend/staticfiles/
 
-# Celery / RabbitMQ
-backend/celerybeat.pid
-backend/celery.pid
+# Packaging
+build/
+dist/
+sdist/
+parts/
+develop-eggs/
+lib/
+lib64/
 
-# Unit test coverage reports
-coverage/
+# Testing and coverage
 .coverage
+coverage/
 htmlcov/
 .tox/
 .nox/
-.cache
+.cache/
+.pytest_cache/
+.mypy_cache/
 
-# MyPy cache
-.mypy_cache
+# Celery
+backend/celerybeat.pid
+backend/celery.pid
 
-# pyenv
+# Misc
 .python-version
-.venv
-
-# Poetry
 poetry.lock
-
-# Rope
 .ropeproject
-
-# Sentry
 .sentry
-
-# Compiled resources
-frontend/*.js.map
-frontend/*.css.map

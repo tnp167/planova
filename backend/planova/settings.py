@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-x6fs+y!^8wmk%ofk$+rj)%=3ro^o62ps!n1+z_s+n%))6*qb1j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok-free.app']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -75,22 +76,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'planova.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql','ENGINE': 'django.db.backends.postgresql',
-    'NAME': getenv('PGDATABASE'),
-    'USER': getenv('PGUSER'),
-    'PASSWORD': getenv('PGPASSWORD'),
-    'HOST': getenv('PGHOST'),
-    'PORT': getenv('PGPORT', 5432),
-    'OPTIONS': {
-      'sslmode': 'require',
-    },
-    'DISABLE_SERVER_SIDE_CURSORS': True,
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': getenv('PGDATABASE'),
+        'USER': getenv('PGUSER'),
+        'PASSWORD': getenv('PGPASSWORD'),
+        'HOST': getenv('PGHOST'),
+        'PORT': getenv('PGPORT', 5432),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+        'DISABLE_SERVER_SIDE_CURSORS': True,
     }
 }
 
@@ -138,4 +138,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://localhost:8000",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+APPEND_SLASH = False  # Disable automatic slash appending
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'svix-id',
+    'svix-timestamp',
+    'svix-signature',
 ]

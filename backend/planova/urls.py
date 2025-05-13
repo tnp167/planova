@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from users.views import clerk_webhook_handler
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/webhooks', clerk_webhook_handler, name='clerk_webhook_handler_slash'),
 ]
