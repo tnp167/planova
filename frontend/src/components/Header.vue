@@ -5,7 +5,9 @@ import { useRouter } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { SignOutButton } from "@clerk/vue";
 import UserImage from "@/assets/images/default-user.jpg";
-
+import ThemeButton from "@/components/ThemeButton.vue";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 const { isSignedIn, user } = useUser();
 const router = useRouter();
 
@@ -27,17 +29,17 @@ const toggleNavigation = () => {
 
 <template>
   <div
-    class="fixed top-0 left-0 w-full z-50 border-b border-n-6 lg:bg-n-8/90 lg:!backdrop-blur-sm"
+    class="fixed top-0 left-0 w-full bg-secondary z-50 border-b dark:border-n-6 lg:!backdrop-blur-sm"
     :class="{
-      'bg-n-8': openNavigation,
-      'bg-n-8/90 backdrop-blur-sm': !openNavigation,
+      'bg-white dark:bg-n-8': openNavigation,
+      'bg-n-8/90 backdrop-blur-sm dark:bg-n-8/90': !openNavigation,
     }"
   >
     <div
       class="flex justify-between items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4"
     >
       <router-link
-        class="font-extrabold text-4xl bg-gradient-to-r from-primary to-[#8c00ff] bg-clip-text text-transparent duration-300 ease-in-out"
+        class="font-extrabold text-4xl bg-gradient-to-r from-primary to-[#8c00ff] bg-clip-text text-transparent duration-300 ease-in-out uppercase"
         to="/"
       >
         Planova
@@ -45,21 +47,44 @@ const toggleNavigation = () => {
 
       <nav
         :class="{ flex: openNavigation, hidden: !openNavigation }"
-        class="fixed top-[5rem] left-0 right-0 bottom-0 bg-n-8 lg:static lg:flex lg:mx-auto lg:bg-transparent"
+        class="fixed top-[5rem] left-0 right-0 bottom-0 lg:static lg:flex lg:mx-auto lg:bg-transparent bg-white dark:bg-n-8"
       >
         <div
-          class="relative z-2 flex flex-col items-center justify-center m-auto lg:flex-row"
+          class="relative z-2 flex flex-col items-center justify-center mx-auto lg:flex-row"
         >
           <router-link
             v-for="item in navigation"
             :key="item.id"
             :to="item.url"
             @click="handleClick"
-            class="block relative !text-lg uppercase text-n-1 transition-colors cursor-pointer px-6 py-6 md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold lg:leading-5 xl:px-12 hover:text-accent duration-300 ease-in-out"
-            activeClass="text-primary text-xl hover:!text-primary"
+            class="block relative !text-lg uppercase text-black dark:text-n-1 cursor-pointer px-6 py-6 md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold lg:leading-5 xl:px-12 hover:text-accent duration-300 ease-in-out"
+            activeClass="text-primary dark:text-primary text-xl hover:!text-primary"
           >
             {{ item.title }}
           </router-link>
+          <Separator class="bg-black dark:bg-white sm:hidden w-full my-5" />
+          <router-link
+            v-if="!isSignedIn"
+            to="/sign-up"
+            class="text-lg m-8 sm:mb-0 sm:text-sm uppercase sm:hidden"
+            >Sign Up
+          </router-link>
+
+          <router-link v-if="!isSignedIn" to="/sign-in">
+            <Button
+              class="text-lg uppercase px-5.5 py-5 text-md bg-primary rounded-md hover:text-white hover:ring-white hover:!ring-1 sm:hidden"
+            >
+              Login
+            </Button>
+          </router-link>
+
+          <Button
+            v-if="isSignedIn"
+            class="uppercase sm:hidden !bg-danger hover:!border-danger mt-8"
+            as-child
+          >
+            <SignOutButton>Sign Out</SignOutButton>
+          </Button>
         </div>
       </nav>
 
@@ -69,33 +94,48 @@ const toggleNavigation = () => {
             :src="user?.imageUrl || UserImage"
             class="w-8 h-8 rounded-full"
           />
-          <span class="text-sm text-gray-300">
+          <span class="text-sm">
             Welcome, {{ user?.firstName || "Traveler" }}
           </span>
         </div>
-        <span v-if="isSignedIn" class="text-sm text-gray-300"> </span>
 
-        <SignOutButton
+        <Button
           v-if="isSignedIn"
-          class="!bg-danger !text-white hover:!border-danger"
+          class="!bg-danger hover:!border-danger"
+          as-child
         >
-          Sign Out
-        </SignOutButton>
+          <SignOutButton>Sign Out</SignOutButton>
+        </Button>
 
-        <router-link v-if="!isSignedIn" to="/sign-up">
-          <button>Sign Up</button>
+        <router-link v-if="!isSignedIn" to="/sign-up" class="text-sm"
+          >Sign Up
         </router-link>
 
         <router-link v-if="!isSignedIn" to="/sign-in">
-          <button class="text-white !bg-primary rounded-md hover:!border-white">
+          <Button
+            class="px-5.5 py-5 text-md bg-primary rounded-md hover:text-white hover:ring-white hover:!ring-1"
+          >
             Login
-          </button>
+          </Button>
         </router-link>
+        <ThemeButton class="hidden lg:block lg:ml-5" />
       </div>
+      <div class="flex items-center space-x-3">
+        <ThemeButton class="lg:hidden" />
 
-      <button class="ml-4 lg:hidden" @click="toggleNavigation">
-        <Icon icon="heroicons:bars-2-solid bg-white" class="w-6 h-6" />
-      </button>
+        <Button
+          variant="ghost"
+          class="ml-2 lg:hidden flex items-center justify-center"
+          @click="toggleNavigation"
+        >
+          <Icon
+            icon="radix-icons:hamburger-menu"
+            class="size-6"
+            v-if="!openNavigation"
+          />
+          <Icon icon="radix-icons:cross-1" class="size-6" v-else />
+        </Button>
+      </div>
     </div>
   </div>
 </template>
