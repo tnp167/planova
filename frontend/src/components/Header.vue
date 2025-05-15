@@ -39,7 +39,7 @@ const toggleNavigation = () => {
       class="flex justify-between items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4"
     >
       <router-link
-        class="font-extrabold text-4xl bg-gradient-to-r from-primary to-[#8c00ff] bg-clip-text text-transparent duration-300 ease-in-out uppercase"
+        class="font-extrabold text-3xl bg-gradient-to-r from-primary to-[#8c00ff] bg-clip-text text-transparent duration-300 ease-in-out uppercase"
         to="/"
       >
         Planova
