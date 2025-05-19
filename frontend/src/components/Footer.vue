@@ -11,7 +11,9 @@ const openInNewTab = (url: string) => {
 
 <template>
   <footer class="bg-secondary dark:bg-n-8">
-    <div class="container mx-auto px-4 py-8 flex items-center justify-between">
+    <div
+      class="container mx-auto px-4 py-8 flex flex-col gap-5 items-center sm:flex-row sm:justify-between"
+    >
       <p class="text-center text-sm text-gray-500 dark:text-n-1">
         &copy; {{ new Date().getFullYear() }} Planova. All rights reserved.
       </p>

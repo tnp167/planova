@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import "./index.css";
 import App from "./App.vue";
 import { clerkPlugin } from "@clerk/vue";
+import Vue3Lottie from "vue3-lottie";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,4 +29,5 @@ if (!PUBLISHABLE_KEY) {
 const app = createApp(App);
 app.use(router);
 app.use(clerkPlugin, { publishableKey: PUBLISHABLE_KEY });
+app.use(Vue3Lottie, { name: "LottieAnimation" });
 app.mount("#app");

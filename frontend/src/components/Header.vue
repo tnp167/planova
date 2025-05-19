@@ -29,7 +29,7 @@ const toggleNavigation = () => {
 
 <template>
   <div
-    class="fixed top-0 left-0 w-full bg-secondary z-50 border-b dark:border-n-6 lg:!backdrop-blur-sm"
+    class="fixed top-0 left-0 h-auto w-full bg-secondary z-50 border-b dark:border-n-6 lg:!backdrop-blur-sm"
     :class="{
       'bg-white dark:bg-n-8': openNavigation,
       'bg-n-8/90 backdrop-blur-sm dark:bg-n-8/90': !openNavigation,
@@ -57,7 +57,7 @@ const toggleNavigation = () => {
             :key="item.id"
             :to="item.url"
             @click="handleClick"
-            class="block relative !text-lg uppercase text-black dark:text-n-1 cursor-pointer px-6 py-6 md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold lg:leading-5 xl:px-12 hover:text-accent duration-300 ease-in-out"
+            class="block relative !bg-transparent !text-lg uppercase text-black dark:text-n-1 cursor-pointer px-6 md:py-6 lg:-mr-0.25 lg:text-xs lg:font-semibold lg:leading-5 xl:px-12 hover:text-accent duration-300 ease-in-out"
             activeClass="text-primary dark:text-primary text-xl hover:!text-primary"
           >
             {{ item.title }}
