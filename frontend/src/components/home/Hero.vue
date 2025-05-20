@@ -5,7 +5,7 @@ import { Vue3Lottie } from "vue3-lottie";
 
 <template>
   <div
-    class="mx-5 min-h-[calc(100vh-100px)] px-4 grid md:grid-cols-2 md:gap=28 gap-6 py-16 lg:py-18 xl:flex-row justify-center items-center"
+    class="mx-5 min-h-[calc(100vh-100px)] px-4 grid md:grid-cols-2 md:gap-28 gap-6 py-16 lg:py-18 xl:flex-row justify-center items-center"
   >
     <div class="flex flex-col gap-8 items-center justify-center">
       <h1 class="text-4xl lg:text-5xl font-bold tracking-wider text-center">
