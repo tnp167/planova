@@ -17,7 +17,8 @@ import { Vue3Lottie } from "vue3-lottie";
         place, explore curated local spots, and map out your adventure, your way
       </p>
       <div class="relative group mt-3">
-        <button
+        <router-link
+          to="/plan"
           class="relative inline-block p-px font-semibold leading-6 text-white cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95"
         >
           <span
@@ -29,7 +30,7 @@ import { Vue3Lottie } from "vue3-lottie";
           >
             <span>Get started</span>
           </span>
-        </button>
+        </router-link>
       </div>
     </div>
     <Vue3Lottie

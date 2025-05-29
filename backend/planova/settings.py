@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'users',
+    'location',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,8 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'middleware.auth_protection.ClerkAuthMiddleware',
 ]
 
 ROOT_URLCONF = 'planova.urls'
@@ -139,6 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
+    "http://localhost:5173",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -166,3 +169,9 @@ CORS_ALLOW_HEADERS = [
     'svix-timestamp',
     'svix-signature',
 ]
+
+
+MAPBOX_ACCESS_TOKEN = getenv('MAPBOX_ACCESS_TOKEN')
+CLERK_SECRET_KEY = getenv("CLERK_SECRET_KEY")
+AMADEUS_CLIENT_ID = getenv('AMADEUS_CLIENT_ID')
+AMADEUS_CLIENT_SECRET = getenv('AMADEUS_CLIENT_SECRET')

@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./App.vue";
 import { clerkPlugin } from "@clerk/vue";
 import Vue3Lottie from "vue3-lottie";
-
+import "mapbox-gl/dist/mapbox-gl.css";
+import { MotionPlugin } from "@vueuse/motion";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -18,6 +19,16 @@ const router = createRouter({
       path: "/sign-up/:catchAll(.*)*",
       component: () => import("./views/Signup.vue"),
     },
+    {
+      path: "/plan",
+      component: () => import("./layouts/ProtectedView.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("./views/Plan.vue"),
+        },
+      ],
+    },
   ],
 });
 
@@ -27,7 +38,9 @@ if (!PUBLISHABLE_KEY) {
 }
 
 const app = createApp(App);
+app.use(MotionPlugin);
 app.use(router);
 app.use(clerkPlugin, { publishableKey: PUBLISHABLE_KEY });
 app.use(Vue3Lottie, { name: "LottieAnimation" });
+
 app.mount("#app");
