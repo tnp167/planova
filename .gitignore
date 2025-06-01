@@ -37,7 +37,6 @@ lerna-debug.log*
 
 # Environment variables
 .env
-.env.*
 !.env.example
 
 # Vue.js / Vite specific

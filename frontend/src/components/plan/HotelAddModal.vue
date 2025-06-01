@@ -22,7 +22,6 @@ import { watch, onMounted, onUnmounted } from "vue";
 import { X } from "lucide-vue-next";
 import TripDateRangePicker from "@/components/ui/date-range-picker/DateRangePicker.vue";
 import Map from "@/components/plan/Map.vue";
-
 const props = defineProps<{
   selected: MapboxFeature | null;
   dateRange: DateRange;

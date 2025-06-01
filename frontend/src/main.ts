@@ -29,6 +29,20 @@ const router = createRouter({
         },
       ],
     },
+    // {
+    //   path: "/travel-plans",
+    //   component: () => import("./layouts/ProtectedView.vue"),
+    //   children: [
+    //     {
+    //       path: "",
+    //       component: () => import("./views/TravelPlans.vue"),
+    //     },
+    //   ],
+    // },
+    {
+      path: "/travel-plans",
+      component: () => import("./views/TravelPlans.vue"),
+    },
   ],
 });
 

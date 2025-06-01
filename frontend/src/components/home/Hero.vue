@@ -18,7 +18,7 @@ import { Vue3Lottie } from "vue3-lottie";
       </p>
       <div class="relative group mt-3">
         <router-link
-          to="/plan"
+          to="/travel-plans"
           class="relative inline-block p-px font-semibold leading-6 text-white cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95"
         >
           <span
