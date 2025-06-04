@@ -17,6 +17,7 @@ load_dotenv()
 def clerk_webhook_handler(request):
     if request.method == 'POST':
         WEBHOOK_SECRET = os.getenv('CLERK_WEBHOOK_SIGNING_SECRET')
+        logger.info(f"Webhook secret present: {bool(WEBHOOK_SECRET)}")
 
         body = request.body
         headers = {

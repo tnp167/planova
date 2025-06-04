@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'location',
+    'trips',
 ]
 
 MIDDLEWARE = [
@@ -171,9 +172,32 @@ CORS_ALLOW_HEADERS = [
     'svix-signature',
 ]
 
+REDIS_URL = getenv('REDIS_URL', "redis://127.0.0.1:6379/1")
+
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
+
 
 MAPBOX_ACCESS_TOKEN = getenv('MAPBOX_ACCESS_TOKEN')
 CLERK_SECRET_KEY = getenv("CLERK_SECRET_KEY")
 AMADEUS_CLIENT_ID = getenv('AMADEUS_CLIENT_ID')
 AMADEUS_CLIENT_SECRET = getenv('AMADEUS_CLIENT_SECRET')
 UNSPLASH_ACCESS_KEY = getenv('UNSPLASH_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = getenv('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = getenv('AWS_REGION')
+AWS_S3_BUCKET_NAME = getenv('AWS_S3_BUCKET_NAME')

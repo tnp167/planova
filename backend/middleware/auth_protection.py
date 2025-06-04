@@ -2,11 +2,12 @@ import os
 from django.http import JsonResponse
 from clerk_backend_api import Clerk
 from clerk_backend_api.jwks_helpers import authenticate_request, AuthenticateRequestOptions
+from users.models import UserProfile
 import httpx
 
 CLERK_SECRET_KEY = os.getenv("CLERK_SECRET_KEY")
 
-PROTECTED_PATHS = ["/api/location/"]
+PROTECTED_PATHS = ["/api/location/", "/api/trips/"]
 
 env = os.getenv("DJANGO_ENV", "development")
 
@@ -40,6 +41,13 @@ class ClerkAuthMiddleware:
                 return JsonResponse({"error": "Unauthorized"}, status=401)
 
             request.clerk_user = result.payload
+
+            # Get the user profile
+            clerk_user_id = result.payload.get("sub")
+            try:
+                request.user_profile = UserProfile.objects.get(clerk_user_id=clerk_user_id)
+            except UserProfile.DoesNotExist:
+                return JsonResponse({"error": "User profile not found"}, status=403)
 
         except Exception as e:
             print("Clerk Auth Exception:", e)

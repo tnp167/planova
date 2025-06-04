@@ -20,7 +20,7 @@ from users.views import clerk_webhook_handler
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/webhooks', clerk_webhook_handler, name='clerk_webhook_handler_slash'),
+    path('api/webhooks', clerk_webhook_handler, name='clerk_webhook_handler'),
     path('api/location/', include('location.urls')),
-
+    path('api/trips/', include('trips.urls')),
 ]
