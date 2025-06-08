@@ -6,6 +6,9 @@ import { clerkPlugin } from "@clerk/vue";
 import Vue3Lottie from "vue3-lottie";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { MotionPlugin } from "@vueuse/motion";
+import Vue3Toastify, { type ToastContainerOptions } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -29,19 +32,15 @@ const router = createRouter({
         },
       ],
     },
-    // {
-    //   path: "/travel-plans",
-    //   component: () => import("./layouts/ProtectedView.vue"),
-    //   children: [
-    //     {
-    //       path: "",
-    //       component: () => import("./views/TravelPlans.vue"),
-    //     },
-    //   ],
-    // },
     {
       path: "/travel-plans",
-      component: () => import("./views/TravelPlans.vue"),
+      component: () => import("./layouts/ProtectedView.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("./views/TravelPlans.vue"),
+        },
+      ],
     },
   ],
 });
@@ -56,5 +55,12 @@ app.use(MotionPlugin);
 app.use(router);
 app.use(clerkPlugin, { publishableKey: PUBLISHABLE_KEY });
 app.use(Vue3Lottie, { name: "LottieAnimation" });
+app.use(Vue3Toastify, {
+  autoClose: 2000,
+  style: {
+    opacity: "1",
+    userSelect: "initial",
+  },
+} as ToastContainerOptions);
 
 app.mount("#app");

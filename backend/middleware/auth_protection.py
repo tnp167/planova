@@ -7,7 +7,7 @@ import httpx
 
 CLERK_SECRET_KEY = os.getenv("CLERK_SECRET_KEY")
 
-PROTECTED_PATHS = ["/api/location/", "/api/trips/"]
+PROTECTED_PATHS = ["/api/"]
 
 env = os.getenv("DJANGO_ENV", "development")
 
@@ -46,6 +46,7 @@ class ClerkAuthMiddleware:
             clerk_user_id = result.payload.get("sub")
             try:
                 request.user_profile = UserProfile.objects.get(clerk_user_id=clerk_user_id)
+                request.user = request.user_profile.user
             except UserProfile.DoesNotExist:
                 return JsonResponse({"error": "User profile not found"}, status=403)
 

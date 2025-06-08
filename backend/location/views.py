@@ -84,7 +84,7 @@ def autocomplete_addresses(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
     
-
+    
 @csrf_exempt
 @require_http_methods(["GET"])
 def get_city_image(request):
@@ -125,7 +125,7 @@ def get_city_image(request):
 
         s3_url = f"https://{settings.AWS_S3_BUCKET_NAME}.s3.{settings.AWS_REGION}.amazonaws.com/{s3_filename}"
 
-        caches['default'].set(cache_key, s3_url, timeout=60 * 60 * 24 * 7)
+        caches['default'].set(cache_key, s3_url, timeout=60 * 60 * 24 * 30)
 
         return JsonResponse({"imageUrl": s3_url}, status=200)
     except Exception as e:

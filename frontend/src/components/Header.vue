@@ -1,20 +1,32 @@
 <script setup lang="ts">
 import { useUser, useClerk } from "@clerk/vue";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { SignOutButton } from "@clerk/vue";
 import UserImage from "@/assets/images/default-user.jpg";
 import ThemeButton from "@/components/ThemeButton.vue";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-const { isSignedIn, user } = useUser();
-const router = useRouter();
 
-const navigation = [
+interface NavigationItem {
+  id: number;
+  title: string;
+  url: string;
+}
+
+const { isSignedIn, user } = useUser();
+
+const navigation: NavigationItem[] = [
   { id: 1, title: "Home", url: "/" },
   { id: 2, title: "About", url: "/about" },
+  { id: 3, title: "Travel Plans", url: "/travel-plans" },
 ];
+
+const filteredNavigation = computed(() => {
+  return navigation.filter(
+    (item) => item.title !== "Travel Plans" || isSignedIn.value
+  );
+});
 
 const openNavigation = ref(false);
 
@@ -25,6 +37,8 @@ const handleClick = () => {
 const toggleNavigation = () => {
   openNavigation.value = !openNavigation.value;
 };
+
+console.log(isSignedIn.value);
 </script>
 
 <template>
@@ -47,17 +61,17 @@ const toggleNavigation = () => {
 
       <nav
         :class="{ flex: openNavigation, hidden: !openNavigation }"
-        class="fixed top-[5rem] left-0 right-0 bottom-0 lg:static lg:flex lg:mx-auto lg:bg-transparent bg-white dark:bg-n-8"
+        class="fixed top-[5rem] left-0 right-0 bottom-0 lg:static lg:flex lg:mx-auto lg:bg-transparent"
       >
         <div
-          class="relative z-2 flex flex-col items-center justify-center mx-auto lg:flex-row"
+          class="relative z-2 flex flex-col items-center justify-center mx-auto lg:flex-row !bg-transparent"
         >
           <router-link
-            v-for="item in navigation"
+            v-for="item in filteredNavigation"
             :key="item.id"
             :to="item.url"
             @click="handleClick"
-            class="block relative !bg-transparent !text-lg uppercase text-black dark:text-n-1 cursor-pointer px-6 md:py-6 lg:-mr-0.25 lg:text-xs lg:font-semibold lg:leading-5 xl:px-12 hover:text-accent duration-300 ease-in-out"
+            class="block relative !text-lg uppercase text-black dark:text-n-1 cursor-pointer px-6 md:py-6 lg:-mr-0.25 lg:text-xs lg:font-semibold lg:leading-5 xl:px-12 hover:text-accent duration-300 ease-in-out"
             activeClass="text-primary dark:text-primary text-xl hover:!text-primary"
           >
             {{ item.title }}

@@ -45,19 +45,28 @@ INSTALLED_APPS = [
     'users',
     'location',
     'trips',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+   "DEFAULT_AUTHENTICATION_CLASSES": [],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "users.permissions.IsClerkAuthenticated",  
+    ],
+}
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware', 
+    'middleware.auth_protection.ClerkAuthMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'middleware.auth_protection.ClerkAuthMiddleware',
+   
 ]
 
 ROOT_URLCONF = 'planova.urls'

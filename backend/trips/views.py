@@ -1,22 +1,17 @@
-from django.shortcuts import render
-from django.http import JsonResponse
 from .models import Trip
-from users.models import UserProfile
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
-import logging
-
-
+from rest_framework.viewsets import ModelViewSet
+from .serializers import TripSerializer
+from users.permissions import IsClerkAuthenticated
 # Create your views here.
-@csrf_exempt
-@require_http_methods(["GET"])
-def get_trips(request):
-    try:
-        user_profile = request.user_profile
-        trips = Trip.objects.filter(user_profile=user_profile).order_by('-created_at').values()
-        return JsonResponse(list(trips), safe=False)
-    except UserProfile.DoesNotExist:
-        return JsonResponse({'error': 'User profile not found'}, status=404)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+class TripViewSet(ModelViewSet):
+    serializer_class = TripSerializer
+    permission_classes = [IsClerkAuthenticated]
+    lookup_field = 'slug' 
 
+    def get_queryset(self):
+        return Trip.objects.filter(user_profile=self.request.user_profile).order_by('-created_at')
+
+    def perform_create(self, serializer):
+        serializer.save(user_profile=self.request.user_profile)
+    
+    

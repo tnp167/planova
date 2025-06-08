@@ -7,7 +7,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"],
+    "types": ["node", "vue3-toastify"],
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true

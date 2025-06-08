@@ -33,20 +33,17 @@ const initGlobe = () => {
     .labelAltitude(0.02)
     .labelDotRadius(0.3)
     .labelDotOrientation(() => "top")
-    .globeOffset([325, 30]);
+    .globeOffset([350, 30]);
 };
 
 onMounted(() => {
   initGlobe();
-
-  // Set initial labels if available
   if (props.labels.length) {
     world.value?.labelsData(props.labels);
     world.value?.pointOfView({ lat: 54.0, lng: 10.0, altitude: 2 }, 3000);
   }
 });
 
-// Dark mode toggle
 watch(isDark, (dark) => {
   if (world.value) {
     world.value
@@ -59,7 +56,6 @@ watch(isDark, (dark) => {
   }
 });
 
-// Watch for label changes
 watch(
   () => props.labels,
   (newLabels) => {
