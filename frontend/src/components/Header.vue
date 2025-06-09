@@ -37,8 +37,6 @@ const handleClick = () => {
 const toggleNavigation = () => {
   openNavigation.value = !openNavigation.value;
 };
-
-console.log(isSignedIn.value);
 </script>
 
 <template>

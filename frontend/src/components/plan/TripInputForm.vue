@@ -15,9 +15,19 @@ import axios from "axios";
 import type { MapboxFeature, MapboxResponse } from "@/lib/types";
 import { useAuth } from "@clerk/vue";
 import { CalendarDate, type DateValue } from "@internationalized/date";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import HotelListModal from "@/components/plan/HotelListModal.vue";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
+const currentStep = ref(1);
+const totalSteps = 3;
 const { getToken } = useAuth();
 const dateRange = ref<DateRange>({
   start: new CalendarDate(
@@ -32,6 +42,7 @@ const dateRange = ref<DateRange>({
   ).add({ days: 20 }) as DateValue | undefined,
 });
 
+const name = ref("");
 const adults = ref(2);
 const children = ref(0);
 const infants = ref(0);
@@ -45,6 +56,14 @@ const suggestions = ref<MapboxFeature[]>([]);
 const selected = ref<MapboxFeature | null>(null);
 const country = ref<string | undefined>(undefined);
 let debounceTimeout: number | undefined;
+
+const goToNext = () => {
+  if (currentStep.value < totalSteps) currentStep.value++;
+};
+
+const goToPrevious = () => {
+  if (currentStep.value > 1) currentStep.value--;
+};
 
 watch(query, async (newVal) => {
   clearTimeout(debounceTimeout);
@@ -99,7 +118,32 @@ function selectLocation(place: any) {
 
 <template>
   <div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumb -->
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/travel-plans">Travel Plans</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>
+            {{ name || "New Trip" }}
+          </BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
     <div class="space-y-4">
+      <Input
+        id="name"
+        type="text"
+        placeholder="Trip Name"
+        v-model="name"
+        class="w-full"
+      />
       <div ref="dropdownRef" class="relative w-full max-w-sm items-center">
         <Input
           id="search"

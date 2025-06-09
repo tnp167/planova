@@ -23,7 +23,7 @@ const router = createRouter({
       component: () => import("./views/Signup.vue"),
     },
     {
-      path: "/plan",
+      path: "/plan/:catchAll(.*)*",
       component: () => import("./layouts/ProtectedView.vue"),
       children: [
         {

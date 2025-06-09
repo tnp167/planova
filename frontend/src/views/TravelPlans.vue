@@ -8,10 +8,11 @@ import { Vue3Lottie } from "vue3-lottie";
 import AttractionsJSON from "@/assets/lottie/attractions.json";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import type { Trip } from "@/lib/types";
-import { createNewTrip, getTrips } from "@/lib/apis";
+import { getTrips } from "@/lib/apis";
 import { useAuth } from "@clerk/vue";
 import TripCard from "@/components/travel-plans/TripCard.vue";
-import { toast } from "vue3-toastify";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import TripCreateForm from "@/components/travel-plans/TripCreateForm.vue";
 
 const labels = ref<
   {
@@ -52,34 +53,6 @@ const loadTrips = async (token: string) => {
     console.error("Error loading trips:", error);
   } finally {
     isLoading.value = false;
-  }
-};
-
-const addNewTrip = async () => {
-  if (!token.value) {
-    router.push("/sign-in");
-  }
-  const toastId = toast.loading("Creating new trip...");
-
-  try {
-    const newTrip = await createNewTrip(token.value!);
-    toast.update(toastId, {
-      render: "New trip created successfully",
-      type: "success",
-      isLoading: false,
-      autoClose: 2000,
-      theme: "auto",
-    });
-    router.push(`/plan/${newTrip?.slug}`);
-  } catch (error) {
-    console.error("Error creating new trip:", error);
-    toast.update(toastId, {
-      render: "Error creating new trip",
-      type: "error",
-      isLoading: false,
-      autoClose: 2000,
-      theme: "auto",
-    });
   }
 };
 
@@ -147,9 +120,18 @@ const handleDelete = async (slug: string) => {
         >
           My Travel Plans
         </h1>
-        <Button class="text-md" v-if="trips.length > 0" @click="addNewTrip">
-          <Plus class="w-4 h-4" /> Create New Plan
-        </Button>
+
+        <Dialog>
+          <DialogTrigger>
+            <Button class="text-md" v-if="trips.length > 0">
+              <Plus class="w-4 h-4" /> Create New Plan
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent class="sm:max-w-md">
+            <TripCreateForm />
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div class="flex-1 overflow-y-auto space-y-4">
@@ -181,9 +163,16 @@ const handleDelete = async (slug: string) => {
             <p class="text-center text-xl">
               You don't have any travel plans yet. Let's create one!
             </p>
-            <RainbowButton class="text-md cursor-pointer" @click="addNewTrip">
-              <Plus class="w-4 h-4 mr-2" /> Create your first travel plan
-            </RainbowButton>
+            <Dialog>
+              <DialogTrigger>
+                <RainbowButton class="text-md cursor-pointer">
+                  <Plus class="w-4 h-4 mr-2" /> Create your first travel plan
+                </RainbowButton>
+              </DialogTrigger>
+              <DialogContent class="max-w-lg w-full">
+                <TripCreateForm @created="loadTrips(token!)" />
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
